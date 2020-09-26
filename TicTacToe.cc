@@ -131,7 +131,7 @@ void game() {
         }
         int m;
         cin >> m;
-        if (m > 9 || m < 0 || table[m] != 0){
+        if (m > 8 || m < 0 || table[m] != 0){
             game();
             return;
         }
