@@ -3,7 +3,7 @@
 using namespace std;
 
 //Current Turn and Table Global Variables
-int turn = -1;
+int turn = 1;
 int table[9] = {};
 
 //Move Properties: Position and Value of the Move
@@ -91,9 +91,15 @@ Move minimax(int cTurn, int cTable[]) {
 
 //Displays Board
 void displayGame(int t[]) {
-    cout << t[0] << ' ' << t[1] << ' ' << t[2] << endl;
-    cout << t[3] << ' ' << t[4] << ' ' << t[5] << endl;
-    cout << t[6] << ' ' << t[7] << ' ' << t[8] << endl;
+    char tD[9] = {};
+    for(int i = 0; i < 9; i++){
+        if(t[i] == 0) tD[i] = '-';
+        else if(t[i] == 1) tD[i] = 'O';
+        else tD[i] = 'X';
+    }
+    cout << tD[0] << " | " << tD[1] << " | " << tD[2] << endl;
+    cout << tD[3] << " | " << tD[4] << " | " << tD[5] << endl;
+    cout << tD[6] << " | " << tD[7] << " | " << tD[8] << endl;
 }
 
 //Keeps Track of Turns and Plays
@@ -105,21 +111,24 @@ void game() {
     //Checks Current State
     int s = checkState(table);
     if(s != 2){
-        if (s == 1) cout << "You Lost!" << endl;
-        else if (s == -1) cout << "You Won!" << endl;
-        else cout << "Tie!" << endl;
+        if (s == 1) cout << "You LOST!" << endl;
+        else if (s == -1) cout << "You WON!" << endl;
+        else cout << "TIE!" << endl;
         return;
     }
     //Turn 1 = CPU / Turn -1 = Human
     if(turn == 1){
-        cout << "CPU TURN:" << endl;
+        cout << "CPU PLAY:" << endl;
         if (allEmpty) table[4] = 1;
         else table[minimax(turn, table).id] = 1;
         displayGame(table);
         turn = -1;
         game();
     } else {
-        if(allEmpty) displayGame(table);
+        if(allEmpty) { 
+            cout << "YOUR TURN:" << endl;
+            displayGame(table);
+        }
         int m;
         cin >> m;
         if (m > 9 || m < 0 || table[m] != 0){
@@ -127,8 +136,6 @@ void game() {
             return;
         }
         table[m] = -1;
-        cout << "YOUR TURN:" << endl;
-        displayGame(table);
         turn = 1;
         game();
     }
@@ -136,6 +143,9 @@ void game() {
 
 //Main
 int main() {
-    cin >> turn;
+    cout << "Do you want yo start? Type Y to comnfirm or N to deny" << endl;
+    char i;
+    cin >> i;
+    if (i == 'Y' || i == 'y') turn = -1;
     game();
 }
