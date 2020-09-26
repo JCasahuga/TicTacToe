@@ -121,7 +121,6 @@ void game() {
     if(turn == 1){
         cout << "CPU PLAY:" << endl;
         table[minimax(turn, table).id] = 1;
-        cout << it << endl;
         displayGame(table);
         turn = -1;
         game();
