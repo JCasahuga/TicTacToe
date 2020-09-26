@@ -65,6 +65,7 @@ Move minimax(int cTurn, int cTable[]) {
             move.score = minimax(-1 * cTurn, cTable).score;
             moves.push_back(move);
             cTable[i] = 0;
+            if(move.score == cTurn) return move;
         }
     }
     //Minimize and Maximizes Score
@@ -119,8 +120,8 @@ void game() {
     //Turn 1 = CPU / Turn -1 = Human
     if(turn == 1){
         cout << "CPU PLAY:" << endl;
-        if (allEmpty) table[4] = 1;
-        else table[minimax(turn, table).id] = 1;
+        table[minimax(turn, table).id] = 1;
+        cout << it << endl;
         displayGame(table);
         turn = -1;
         game();
